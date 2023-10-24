@@ -18,13 +18,13 @@ export default function ModalAction(props) {
                 },
                 body: JSON.stringify(form)
             })
-            .then(() => {
-                props.setClose(false);
-                props.refresh();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+                .then(() => {
+                    props.setClose(false);
+                    props.refresh();
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         } else {
             alert("Preencha todos os campos do formulário!")
         }
@@ -35,16 +35,20 @@ export default function ModalAction(props) {
             <div className="modal">
                 <div className="modal-body">
                     <h1>Adicionar produto</h1>
-                    <input placeholder="Nome" value={form.nome} onChange={(value) => setForm({ ...form, nome: value.target.value })} />
-                    <input placeholder="Descrição" value={form.descricao} onChange={(value) => setForm({ ...form, descricao: value.target.value })} />
-                    <input placeholder="Preço" type="number" value={form.preco} onChange={(value) => setForm({ ...form, preco: value.target.value })} />
                     <div>
-                        <div>
-                            <button onClick={submit}>Add</button>
-                        </div>
-                        <div>
-                            <button onClick={() => props.setClose(false)} >Fechar</button>
-                        </div>
+                        <input placeholder="Nome" value={form.nome} onChange={(value) => setForm({ ...form, nome: value.target.value })} />
+                    </div>
+                    <div>
+                        <input placeholder="Descrição" value={form.descricao} onChange={(value) => setForm({ ...form, descricao: value.target.value })} />
+                    </div>
+                    <div>
+                        <input placeholder="Preço" type="number" value={form.preco} onChange={(value) => setForm({ ...form, preco: value.target.value })} />
+                    </div>
+                    <div>
+                        <button className="submit" onClick={submit}>Add</button>
+                    </div>
+                    <div>
+                        <button className="submit" onClick={() => props.setClose(false)} >Fechar</button>
                     </div>
                 </div>
             </div>

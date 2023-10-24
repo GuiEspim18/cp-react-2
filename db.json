@@ -7,9 +7,9 @@
       "preco": 40000
     },
     {
-      "nome": "teste ",
-      "descricao": "teste de descrição",
-      "preco": "2000",
+      "nome": "teste de produto",
+      "descricao": "teste de",
+      "preco": "10",
       "id": 5
     }
   ]
