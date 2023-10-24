@@ -5,11 +5,15 @@ import styles from "./Produtos.module.css";
 import { AiFillEdit as Editar } from "react-icons/ai";
 import { MdDeleteForever as Excluir } from "react-icons/md";
 import ModalAction from "../components/ModalAction/ModalAction";
+import ModalExcluir from "../components/ModalExcluir/ModalExcluir";
+// import { useHistory } from 'react-router-dom';
 
 export default function Produtos() {
   document.title = "Lista de Produtos";
+  // const history = useHistory();
 
   const [listaProdutosLocal, setListaProdutosLocal] = useState([{}]);
+  const [select, setSelect] = useState({})
 
   //Estrutura que recebe a lista de produtos externa e repassa para uma lista local.
   useEffect(() => {
@@ -21,15 +25,25 @@ export default function Produtos() {
 
   const [open, setOpen] = useState(false);
 
+  const [excluirModal, setExcluirModal] = useState(false);
+
+  const refresh = () => {
+    fetch("http://localhost:5000/produtos")
+          .then((response) => response.json())
+          .then((response) => setListaProdutosLocal(response))
+          .catch((error) => console.log(error));
+  }
+
 
   return (
     <div>
       <h1>Lista de Produtos</h1>
 
-      <ModalAction open={open} setClose={setOpen}/>
+      <ModalAction open={open} setClose={setOpen} refresh={refresh} />
+      {excluirModal && <ModalExcluir setClose={setExcluirModal} refresh={refresh} selected={select}/>}
 
-      <button onClick={()=> setOpen(true)}>OPEN-MODAL</button>
-      
+      <button onClick={() => setOpen(true)}>OPEN-MODAL</button>
+
       <div>
         <table className={styles.tblEstilo}>
           <thead>
@@ -55,9 +69,12 @@ export default function Produtos() {
                     <Editar />{" "}
                   </Link>{" "}
                   |{" "}
-                  <Link to={`/excluir/produtos/${item.id}`}>
+                  <Link onClick={() => {
+                    setExcluirModal(true);
+                    setSelect(item)
+                  }}>
                     <Excluir />
-                  </Link>{" "}
+                  </Link>
                 </td>
               </tr>
             ))}
